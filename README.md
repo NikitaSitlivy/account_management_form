@@ -1,5 +1,49 @@
-# Vue 3 + TypeScript + Vite
+# Accounts Form (Vue 3 + Vite)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Небольшое приложение с формой учета учетных записей. Реализованы валидация, сохранение в `localStorage`, восстановление после перезагрузки страницы.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Требования
+- Node.js 18+ (рекомендуется 20+)
+- npm (или pnpm/yarn, если используете их)
+
+## Установка
+```bash
+npm install
+```
+
+## Запуск в режиме разработки
+```bash
+npm run dev
+```
+
+## Сборка
+```bash
+npm run build
+```
+Сборка будет в `dist/`.
+
+## Просмотр собранной версии
+```bash
+npm run preview
+```
+
+## Основные функции
+- Добавление/удаление учетных записей.
+- Поля:
+  - `Метка` — необязательное, максимум 50 символов, ввод через `;`, сохраняется как массив `{ text }`.
+  - `Тип записи` — `LDAP` или `Локальная`.
+  - `Логин` — обязательное, максимум 100 символов.
+  - `Пароль` — обязательное, максимум 100 символов, показывается только для `Локальная`.
+- Валидация при потере фокуса у текстовых полей и при изменении select.
+- Сохранение в `localStorage` только при валидности обязательных полей.
+
+## Хранение данных
+Данные сохраняются в `localStorage` по ключу:
+```
+accounts_form_state_v1
+```
+
+## Структура проекта (основное)
+- `src/components/AccountsForm.vue` — UI формы и логика валидации/ввода.
+- `src/stores/accounts.ts` — Pinia store и сохранение в `localStorage`.
+
