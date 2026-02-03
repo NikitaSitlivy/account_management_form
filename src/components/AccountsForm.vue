@@ -21,7 +21,7 @@
 
         <div class="body">
           <template v-for="a in store.accounts" :key="a.id">
-            <div class="row">
+            <div class="row" :class="{ 'row-ldap': draftFor(a.id).type === 'LDAP' }">
               <div class="cell">
                 <el-input
                   v-model="draftFor(a.id).labelInput"
@@ -45,7 +45,7 @@
                 </el-select>
               </div>
 
-              <div class="cell">
+              <div class="cell login-cell">
                 <el-input
                   v-model="draftFor(a.id).login"
                   :maxlength="100"
@@ -56,7 +56,7 @@
                 />
               </div>
 
-              <div class="cell">
+              <div class="cell password-cell">
                 <div class="password-slot">
                   <el-input
                     v-if="draftFor(a.id).type === 'LOCAL'"
@@ -286,6 +286,12 @@ const onRemove = (id: string) => {
   gap: 12px;
   align-items: center;
   padding: 12px 12px;
+}
+.row-ldap .password-cell {
+  display: none;
+}
+.row-ldap .login-cell {
+  grid-column: 3 / 5;
 }
 
 .head {

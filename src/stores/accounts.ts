@@ -38,8 +38,18 @@ export const useAccountsStore = defineStore('accounts', {
     accounts: safeParse(localStorage.getItem(STORAGE_KEY)) as Account[],
   }),
   actions: {
+    isPersistable(account: Account) {
+      const loginOk = account.login.trim().length > 0 && account.login.length <= 100
+      const typeOk = account.type === 'LDAP' || account.type === 'LOCAL'
+      if (!loginOk || !typeOk) return false
+      if (account.type === 'LOCAL') {
+        return typeof account.password === 'string' && account.password.trim().length > 0 && account.password.length <= 100
+      }
+      return account.password === null
+    },
     persist() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.accounts))
+      const persistable = this.accounts.filter((a) => this.isPersistable(a))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(persistable))
     },
     addEmpty() {
       const id = crypto.randomUUID()
